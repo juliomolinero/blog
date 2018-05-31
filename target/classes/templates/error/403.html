@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout::site-head">
+	<title>Welcome to Spring MVC Blog</title>
+</head>
+<body>	
+<!-- The header coming from layout -->
+<header th:replace="layout::site-header"></header>
+	
+	<div class="container">
+		<div class="hidden-xs text-center"><img th:src="@{/img/sunglasses-face.jpg}" src="../../public/img/sunglasses-face.jpg"/></div>
+			<div class="text-center">
+			<div><h2>You are not allowed to see this content</h2></div>
+		</div>
+	</div><!-- ./ container -->
+
+<!-- The footer coming from layout -->	
+<footer th:replace="layout::site-footer"></footer>
+</body>
+</html>

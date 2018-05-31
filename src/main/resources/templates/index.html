@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout::site-head">
+	<title>Welcome to Spring MVC Blog</title>
+</head>
+<body>	
+	<header th:replace="layout::site-header"></header>
+	
+	<aside>
+		<h2>Recent Posts</h2>
+		<a href="#" th:each="p : ${latest5Posts}" th:text="${p.title}" th:href="@{/posts/view/{id}/(id=${p.id})}">Work Begins on HTML5.1</a>
+	</aside>
+	
+	<main id="posts">
+		<article th:each="p : ${latest3Posts}">
+			<h2 class="title" th:text="${p.title}">Post Title</h2>
+	      <div class="date">
+	        <i>Posted on</i>
+	        <span th:text="${#dates.format(p.date, 'dd-MMM-yyyy')}">22-May-2016</span>
+	        <span th:if="${p.author}" th:remove="tag">
+	          <i>by</i>
+	          <span th:text="${p.author.fullName != null ? p.author.fullName : p.author.userName}">Svetlin Nakov</span>
+	        </span>
+	      </div>
+	      <p class="content" th:utext="${p.body}">Post content</p>
+		</article>
+	</main>	
+<!-- The footer coming from layout -->	
+<footer th:replace="layout::site-footer"></footer>		
+</body>
+</html>

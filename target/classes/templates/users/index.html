@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout::site-head">
+	<title>Welcome to Spring MVC Blog</title>
+</head>
+<body>	
+	<header th:replace="layout::site-header"></header>
+	
+	<div class="container">		
+		<table class="table table-hover">
+		<thead>
+		<tr>
+			<th>ID</th>
+			<th>User Name</th>
+			<th>Full Name</th>			
+			<th>Posts</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr th:each="u : ${users}">
+			<td th:text="${u.id}"></td>
+			<td th:text="${u.userName}"></td>
+			<td th:text="${u.fullName}"></td>			
+			<td th:text="${#lists.size(u.posts)}"></td>			
+		</tr>
+		</tbody>
+		</table>
+		<div class="row">			
+			<div class="col-md-12">				
+				<ul class="pagination justify-content-center">
+					<!-- Send this if you want to let users to change page size property
+					<li th:class="${posts.number eq 0} ? 'page-item disabled' : 'page-item'">
+			            <a class="page-link" th:if="${not posts.first}" th:href="@{${'/posts'}(page=${posts.number-1},size=${posts.size})}">Previous</a>
+			            <a class="page-link" th:if="${posts.first}" href="#">Previous</a>
+			        </li>
+			        -->
+			        
+			        <li th:class="${users.number eq 0} ? 'page-item disabled' : 'page-item'">
+			            <a class="page-link" th:if="${not users.first}" th:href="@{${'/users'}(page=${users.number-1})}">&laquo;</a>
+			            <a class="page-link" th:if="${users.first}" href="#">&laquo;</a>
+			        </li>
+			
+			        <li th:each="pageNo : ${#numbers.sequence(0, users.totalPages - 1)}" th:class="${users.number eq pageNo} ? 'page-item active' : 'page-item'">
+			            <a class="page-link" th:if="${users.number  eq pageNo}" href="#">
+			                <span th:text="${pageNo + 1}"></span>
+			            </a>
+			            <a class="page-link" th:if="${not (users.number  eq pageNo)}" th:href="@{${'/users'}(page=${pageNo})}">
+			                <span th:text="${pageNo + 1}"></span>
+			            </a>
+			
+			        </li>
+			        <li th:class="${users.number + 1 ge users.totalPages} ? 'page-item disabled' : 'page-item'">
+			            <a class="page-link" th:if="${not users.last}" th:href="@{${'/users'}(page=${users.number+1})}">&raquo;</a>
+			            <a class="page-link" th:if="${users.last}" href="#">&raquo;</a>
+			        </li>
+				</ul><!-- ./ pagination -->								
+			</div><!-- ./ col-md-7 -->
+		</div><!-- ./ row -->
+	</div><!-- ./ container -->
+<!-- The footer coming from layout -->	
+<footer th:replace="layout::site-footer"></footer>		
+</body>
+</html>

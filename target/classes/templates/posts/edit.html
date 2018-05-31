@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout::site-head">
+    <title>Edit Post</title>
+</head>
+
+<body>
+	<header th:replace="layout::site-header"></header>	
+	
+	<h2>Edit Post</h2>
+	
+	<div class="container row">		
+		<form action="#" th:action="@{/posts/edit}" th:object="${post}" method="post" class="form col-md-5 col-md-offset-7">						
+			<div class="form-group">
+				<label>Title</label>
+				<input type="hidden" th:field="*{id}"/>
+				<input type="hidden" th:field="*{author}"/>
+				<input type="text" th:field="*{title}" th:class="${#fields.hasErrors('title') ? 'form-control is-invalid' : 'form-control'}" />
+				<div th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="invalid-feedback"></div> 
+			</div><!-- Post Title -->
+			<div class="form-group">
+				<label>Content</label>
+				<textarea rows="5" cols="" th:field="*{body}" th:class="${#fields.hasErrors('body') ? 'form-control is-invalid' : 'form-control'}" ></textarea>				 
+				<div th:if="${#fields.hasErrors('body')}" th:errors="*{body}" class="invalid-feedback"></div>
+			</div><!-- Post Content -->			
+			<div class="form-group clearfix">
+				<button type="submit" class="btn btn-primary float-right">Update Post</button>
+			</div><!-- Submit Button -->
+			<div class="form-group">
+				<div th:class="${successMessage} ? 'alert alert-success' : ''" th:text="${successMessage}"></div>
+			</div><!-- Success message -->
+		</form>		
+	</div>
+
+	<footer th:replace="layout::site-footer"></footer>
+</body>
+
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout::site-head">
+	<title>Welcome to Spring MVC Blog</title>
+</head>
+<body>	
+	<header th:replace="layout::site-header"></header>
+	
+	<div class="container">		
+		<table class="table table-hover">
+		<thead>
+		<tr>
+			<th>ID</th>
+			<th>Title</th>
+			<th>Content</th>
+			<th>Date Created</th>
+			<th>Author ID</th>
+			<th class="text-center" sec:authorize="hasAuthority('ADMIN')">Action</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr th:each="p : ${posts}">
+			<td th:text="${p.id}"></td>
+			<td th:text="${p.title}"></td>
+			<td th:text="${p.body}"></td>
+			<td th:text="${#dates.format(p.date, 'dd-MMM-yyyy')}"></td>
+			<td>
+				<span th:if="${p.author}" th:remove="tag">
+	          		<i>by</i>
+					<span th:text="${p.author.fullName != null ? p.author.fullName : p.author.userName}">Default Author</span>
+				</span>
+			</td>
+			<td class="text-center" sec:authorize="hasAuthority('ADMIN')">
+				<a href="#" th:href="@{/posts/edit/{id}/(id=${p.id})}"><span class="fa fa-edit"></span></a>				
+				<a href="#" role="button" data-toggle="modal" data-target="#myModal"><span class="fa fa-trash"></span></a>				
+				<!-- The Modal -->
+                <div class="modal fade" id="myModal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title"><span class="fa fa-trash"></span>&nbsp;Confirm Delete</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body">
+				                <p>Are you sure you want to delete this post? </p>
+				            </div>
+                            <!-- Modal footer -->
+                            <div class="modal-footer">                                
+                                <a th:href="@{'/posts/delete/'+${p.id}}"><button type="button" class="btn btn-danger">Delete</button></a>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+			</td>
+		</tr>
+		</tbody>
+		</table>
+		<div class="row">			
+			<div class="col-md-12">				
+				<ul class="pagination justify-content-center">
+					<!-- Send this if you want to let users to change page size property
+					<li th:class="${posts.number eq 0} ? 'page-item disabled' : 'page-item'">
+			            <a class="page-link" th:if="${not posts.first}" th:href="@{${'/posts'}(page=${posts.number-1},size=${posts.size})}">Previous</a>
+			            <a class="page-link" th:if="${posts.first}" href="#">Previous</a>
+			        </li>
+			        -->
+			        
+			        <li th:class="${posts.number eq 0} ? 'page-item disabled' : 'page-item'">
+			            <a class="page-link" th:if="${not posts.first}" th:href="@{${'/posts'}(page=${posts.number-1})}">&laquo;</a>
+			            <a class="page-link" th:if="${posts.first}" href="#">&laquo;</a>
+			        </li>
+			
+			        <li th:each="pageNo : ${#numbers.sequence(0, posts.totalPages - 1)}" th:class="${posts.number eq pageNo} ? 'page-item active' : 'page-item'">
+			            <a class="page-link" th:if="${posts.number  eq pageNo}" href="#">
+			                <span th:text="${pageNo + 1}"></span>
+			            </a>
+			            <a class="page-link" th:if="${not (posts.number  eq pageNo)}" th:href="@{${'/posts'}(page=${pageNo})}">
+			                <span th:text="${pageNo + 1}"></span>
+			            </a>
+			
+			        </li>
+			        <li th:class="${posts.number + 1 ge posts.totalPages} ? 'page-item disabled' : 'page-item'">
+			            <a class="page-link" th:if="${not posts.last}" th:href="@{${'/posts'}(page=${posts.number+1})}">&raquo;</a>
+			            <a class="page-link" th:if="${posts.last}" href="#">&raquo;</a>
+			        </li>
+				</ul><!-- ./ pagination -->								
+			</div><!-- ./ col-md-7 -->
+		</div><!-- ./ row -->
+	</div><!-- ./ container -->
+<!-- The footer coming from layout -->	
+<footer th:replace="layout::site-footer"></footer>		
+</body>
+</html>
