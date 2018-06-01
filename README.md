@@ -134,4 +134,5 @@ The process is pretty much what you did above to run the application but in this
 * [Svetlin Nakov](http://www.nakov.com/blog/2016/08/05/creating-a-blog-system-with-spring-mvc-thymeleaf-jpa-and-mysql/)
 * [Gustavo Ponce](https://medium.com/@gustavo.ponce.ch/spring-boot-spring-mvc-spring-security-mysql-a5d8545d837d)
 * [Pivotal Software](https://spring.io/guides/gs/securing-web/)
+* [JavaSampleApproach](http://javasampleapproach.com/testing/datajpatest-with-spring-boot)
 * [PurpleBooth](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2) For helping me on the creation of this README file
